@@ -1,5 +1,43 @@
 #include<stdio.h>
 #include<malloc.h>
+
+
+const void mergeSort(){
+    int nr_elem;
+    int *arr=(int*)malloc(nr_elem*sizeof(int));
+    printf("Introduceti nr. de elemente: \n\n");
+    scanf("%d",&nr_elem);
+    if(nr_elem<0||!arr){
+        printf("Eroare!");
+        return;
+    }
+    for(int i=0;i<nr_elem;i++){
+        printf("array[%d]= ",i);
+        scanf("%d",arr[i]);
+    }
+    int n1=mid_pos-left_pos+1;
+    int n2=right_pos-mid_pos;
+    int *l_array=(int*)malloc(n1*sizeof(int));
+    int *r_array=(int*)malloc(n2*sizeof(int));
+    for(int i=0;i<n1;i++)l_array[i]=arr[left+i];
+    for(int i=0;i<n2;i++)r_array[i]=arr[mid+j+1];
+
+    int i=0,j=0;
+    k_index=left_pos;
+    while(i<n1 && j<n2){
+        if(l_array[i]<=r_array[j]){
+            arr[k_index++]=l_array[i++];
+        }else{
+            arr[k_index++]=r_array[j++];
+        }
+    }
+    while(i<n1)arr[k_index++]=l_array[i++];
+    while(j<n2)arr[k_index++]=r_array[j++];
+    free(l_array);
+    free(r_array);
+    
+}
+
 const void bubbleSort(){
     int nr_elem;
     int *arr=(int*)malloc(nr_elem*sizeof(int));
@@ -60,6 +98,7 @@ const void insertionSort(){
     free(arr);
     arr=NULL;
 }
+
 void sort_algo_menu(){
 int int_input;
     printf("\n Sortari \n");
@@ -73,6 +112,8 @@ int int_input;
     printf("8. Counting Sort\n");
     printf("9. Radix Sort\n");
     printf("10. Bucket Sort\n");
+    printf("Alege :");
+    scanf("%d",int_input);
     switch(int_input){
         case 1:bubbleSort();break;
         case 2:quickSort();break;
