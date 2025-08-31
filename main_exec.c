@@ -1,9 +1,21 @@
-#include<stdio.h>
-#include<malloc.h>
-#include<time.h>
-#include<sys/resource.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <stdbool.h>
 
-const void timSort(){
+void bubbleSort();
+void quickSort();
+void insertionSort();
+void selectionSort();
+void mergeSort();
+void heapSort();
+void shellSort();
+void countSort();
+void radixSort();
+void bucketSort();
+
+ void timSort(){
      srand(time(NULL));
     int nr_elem;
     printf("Introduceti nr. de elemente: ");
@@ -31,15 +43,15 @@ const void timSort(){
     }
 
 }
-const void countingSort(){
+
+void countingSort(){
     srand(time(NULL));
-    int nr_elem;
-    int a;
-    int b;
+    int nr_elem,a,b;
     printf("Introduceti nr. de elemente: ");
     scanf("%d",&nr_elem);
     printf("Introduceti valoarea minima < - > maxima pentru valorile vectorului: ");
     scanf("%d %d",&a,&b);
+int *arr=(int*)malloc(nr_elem*sizeof(int));
     if (nr_elem || !arr){
         printf("Eroare!");
         return;
@@ -66,25 +78,23 @@ while(counts_array[i]>0){
 
     printf("Elemente sortate");
     for(int i=0;i<nr_elem;i++){
-        printf("%d ",arr[i]);
+        printf("array[%d]= %d\n",arr[i]);
     }
     printf("\n");
 free(arr);
 free(counts_array);
 }
-const void selectionSort()
+void selectionSort()
 {
-    srand(time(NULL));
-    int nr_elem;
-    int *arr=(int*)malloc(nr_elem*sizeof(int));
-    int a;
-    int b;
+    int nr_elem,a,b;
     printf("Introduceti nr. de elemente: ");
     scanf("%d",&nr_elem);
     printf("Introduceti valoarea minima < - > maxima pentru valorile vectorului: ");
     scanf("%d %d",&a,&b);
+
+    int *arr=(*int)malloc(nr_elem*sizeof(int));
      if (nr_elem<0|| !arr){
-        printf("Eroare!");
+        printf("Eroare!\n");
         return;
     }
     for(int i=0;i<nr_elem;i++){
@@ -109,7 +119,7 @@ const void selectionSort()
     printf("\n");
     free(arr);
 }
-const void quickSortLogic(){
+void quickSortLogic(){
     if (l<r){
         int element_pivot=arr[r];
         int i=l-1;
@@ -128,10 +138,8 @@ const void quickSortLogic(){
         quickSortLogic(arr,i+i,r);
     }
 }
-const void quickSort(){
-    int nr_elem;
-    int a,b;
-    int *arr=(int*)malloc(nr_elem*sizeof(int));
+ void quickSort(){
+    int nr_elem,a,b;
     printf("Introduceti nr. de elemente: \n\n");
     scanf("%d",&nr_elem);
     printf("Introduceti valoarea minima < - > maxima pentru valorile vectorului: ");
@@ -140,15 +148,15 @@ const void quickSort(){
         printf("Eroare!");
         return;
     }
-
+    int *arr=(int*)malloc(nr_elem*sizeof(int));
     for(int i=0;i<nr_elem;i++){
-        arr[i]=rand()%a+b;
-        printf("array[%d]= %d",i,arr[i]);
+        arr[i]=(rand()%(b-a+1))+a;
+        printf("array[%d]= %d\n",i,arr[i]);
     }
-    quickSortLogic(arr,o,nr_elem-1);
-    
+    quickSortLogic(arr,0,nr_elem-1);
+    free(arr);
 }
-const void mergeSort(){
+ void mergeSort(){
     int nr_elem;
     int a,b;
     printf("Introduceti nr. de elemente: \n\n");
@@ -187,23 +195,22 @@ const void mergeSort(){
     free(r_array);   
 }
 
-const void bubbleSort(){
-    int nr_elem;
-    int a,b;
-    int *arr=(int*)malloc(nr_elem*sizeof(int));
+void bubbleSort(){
+    int nr_elem,a,b;
     printf("Introduceti nr. de elemente: \n\n");
     scanf("%d",&nr_elem);
     printf("Introduceti valoarea minima < - > maxima pentru valorile vectorului: ");
     scanf("%d %d",&a,&b);
-    if( nr_elem<0 || !arr){
+    int *arr=(int*)malloc(nr_elem*sizeof(int));
+    if( nr_elem < 0 || !arr){
         printf("Eroare!");
         return;
     }
     for(int i=0;i<nr_elem;i++){
-        arr[i]=rand()%a+b;
-        printf("array[%d]= %d",i,arr[i]);        
+        arr[i]=(rand()%(b-a+1))+a;
+        printf("array[%d]= %d\n",i,arr[i]);        
     }
-
+bool bool_checker;
     do {
 bool_checker=false;
 for(int i=0;i<nr_elem-1;i++){
@@ -222,20 +229,20 @@ printf("\n");
     free(arr);
     arr=NULL;
 }
-const void insertionSort(){
-    srand(time(NULL));
-    int nr_elem;
+ void insertionSort(){
+    int nr_elem,a,b;
     printf("Introduceti nr. de elemente: \n\n");
     scanf("%d",&nr_elem);
     printf("Introduceti valoarea minima < - > maxima pentru valorile vectorului: ");
     scanf("%d %d",&a,&b);
+    int *arr=(int*)malloc(nr_elem*sizeof(int));
     if(nr_elem<0||!arr){
         printf("Eroare!");
         return;
     }
     for(int i=0;i<nr_elem;i++){
-        arr[i]=rand()%a+b;
-        printf("array[%d]= %d",i,arr[i]);
+        arr[i]=(rand()%(b-a+1))+a;
+        printf("array[%d]= %d\n",i,arr[i]);
     }
     for(int i=1;i<nr_elem;i++){
         int element_cheie=arr[i];
@@ -268,7 +275,7 @@ int int_input;
     printf("9. Radix Sort\n");
     printf("10. Bucket Sort\n");
     printf("Alege :");
-    scanf("%d",int_input);
+    scanf("%d",&int_input);
     switch(int_input){
         case 1:{
             struct rusage usage_before,usage_after;
@@ -280,7 +287,7 @@ int int_input;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
         printf("Execution time - > %.7f seconds \n",exec_time);
-        printf("Memory used - > %ld KB\n".exec_memory_used);
+        printf("Memory used - > %ld KB\n",exec_memory_used);
         break;
         }
         case 2:{
@@ -293,7 +300,7 @@ int int_input;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
         printf("Execution time - > %.7f seconds \n",exec_time);
-        printf("Memory used - > %ld KB\n".exec_memory_used);
+        printf("Memory used - > %ld KB\n",exec_memory_used);
         break;}
         case 3: {
               struct rusage usage_before,usage_after;
@@ -305,7 +312,7 @@ int int_input;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
         printf("Execution time - > %.7f seconds \n",exec_time);
-        printf("Memory used - > %ld KB\n".exec_memory_used);
+        printf("Memory used - > %ld KB\n",exec_memory_used);
         break;
         }
         case 4: {
@@ -318,7 +325,7 @@ int int_input;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
         printf("Execution time - > %.7f seconds \n",exec_time);
-        printf("Memory used - > %ld KB\n".exec_memory_used);
+        printf("Memory used - > %ld KB\n",exec_memory_used);
         break;
         }
         case 5: {
@@ -330,7 +337,7 @@ int int_input;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
         printf("Execution time - > %.7f seconds \n",exec_time);
-        printf("Memory used - > %ld KB\n".exec_memory_used);
+        printf("Memory used - > %ld KB\n",,exec_memory_used);
         break;}
         case 6:{ 
               struct rusage usage_before,usage_after;
@@ -342,7 +349,7 @@ int int_input;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
         printf("Execution time - > %.7f seconds \n",exec_time);
-        printf("Memory used - > %ld KB\n".exec_memory_used);
+        printf("Memory used - > %ld KB\n",exec_memory_used);
         break;}
         case 7:{ 
               struct rusage usage_before,usage_after;
@@ -354,7 +361,7 @@ int int_input;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
         printf("Execution time - > %.7f seconds \n",exec_time);
-        printf("Memory used - > %ld KB\n".exec_memory_used);
+        printf("Memory used - > %ld KB\n",exec_memory_used);
         break;}
         case 8: {
               struct rusage usage_before,usage_after;
@@ -366,7 +373,7 @@ int int_input;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
         printf("Execution time - > %.7f seconds \n",exec_time);
-        printf("Memory used - > %ld KB\n".exec_memory_used);
+        printf("Memory used - > %ld KB\n",exec_memory_used);
         break;
 }
         case 9:{
@@ -379,7 +386,7 @@ int int_input;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
         printf("Execution time - > %.7f seconds \n",exec_time);
-        printf("Memory used - > %ld KB\n".exec_memory_used);
+        printf("Memory used - > %ld KB\n",exec_memory_used);
         break;}
         case 10:{
               struct rusage usage_before,usage_after;
@@ -391,14 +398,14 @@ int int_input;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
         printf("Execution time - > %.7f seconds \n",exec_time);
-        printf("Memory used - > %ld KB\n".exec_memory_used);
+        printf("Memory used - > %ld KB\n",exec_memory_used);
         break;}
         default:printf("Optiune invalida\n\n");
     }
 }
 
 int main(){
-char *input=(char*)malloc(2*sizeof(char));
+char *input=(char*)malloc(3*sizeof(char));
     do {
 printf("1. Alg Sortari\n");
 printf("2. Alg Cautari\n");
@@ -415,6 +422,6 @@ switch (int_input){
     case 3: graph_algo_menu();break;
     default: printf("Optiune invalida\n");break;
 }
-    }while((strcmp(input,"q")==0 )||(strcmp(input,"Q")));
+} while(strcmp(input,"q")!=0 && strcmp(input,"Q")!=0);
     return 0;
 }
