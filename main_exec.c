@@ -1,9 +1,18 @@
-<<<<<<< HEAD
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include <stdbool.h>
+#define CASE_BUBBLE_SORT 1
+#define CASE_QUICK_SORT 2
+#define CASE_INSERTION_SORT 3
+#define CASE_SELECTION_SORT 4
+#define CASE_MERGE_SORT 5
+#define CASE_HEAP_SORT 6
+#define CASE_SHELL_SORT 7
+#define CASE_COUNT_SORT 8
+#define CASE_RADIX_SORT 9
+#define CASE_BUCKET_SORT 10
 
 void bubbleSort();
 void quickSort();
@@ -426,7 +435,6 @@ switch (int_input){
 } while(strcmp(input,"q")!=0 && strcmp(input,"Q")!=0);
     return 0;
 }
-=======
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -1435,70 +1443,70 @@ static void sort_algo_menu(void){
     printf("Alege :");
     if (scanf("%d", &int_input) ==1 && int_input>=1 && int_input<=10){
     switch(int_input){
-        case 1:{
+        case CASE_BUBBLE_SORT:{
             clock_t f_time = clock();
             bubbleSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
             printf("Execution time - > %.7f seconds \n", exec_time);
             break;}
-        case 2:{
+        case CASE_QUICK_SORT:{
             clock_t f_time = clock();
             quickSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
             printf("Execution time - > %.7f seconds \n", exec_time);
             break;}
-        case 3:{
+        case CASE_INSERTION_SORT:{
             clock_t f_time = clock();
             insertionSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
             printf("Execution time - > %.7f seconds \n", exec_time);
             break;}
-        case 4:{
+        case CASE_SELECTION_SORT:{
             clock_t f_time = clock();
             selectionSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
             printf("Execution time - > %.7f seconds \n", exec_time);
             break;}
-        case 5:{
+        case CASE_MERGE_SORT:{
             clock_t f_time = clock();
             mergeSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
             printf("Execution time - > %.7f seconds \n", exec_time);
             break;}
-        case 6:{
+        case CASE_HEAP_SORT:{
             clock_t f_time = clock();
             heapSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
             printf("Execution time - > %.7f seconds \n", exec_time);
             break;}
-        case 7:{
+        case CASE_SHELL_SORT:{
             clock_t f_time = clock();
             shellSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
             printf("Execution time - > %.7f seconds \n", exec_time);
             break;}
-        case 8:{
+        case CASE_COUNT_SORT:{
             clock_t f_time = clock();
             countingSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
             printf("Execution time - > %.7f seconds \n", exec_time);
             break;}
-        case 9:{
+        case CASE_RADIX_SORT:{
             clock_t f_time = clock();
             radixSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
             printf("Execution time - > %.7f seconds \n", exec_time);
             break;}
-        case 10:{
+        case CASE_BUCKET_SORT:{
             clock_t f_time = clock();
             bucketSort();
             f_time = clock() - f_time;
@@ -1609,4 +1617,3 @@ do {
 free(input);
     return 0;
 }
->>>>>>> 6135c0b (sm changes)
