@@ -3,17 +3,28 @@
 #include <string.h>
 #include <time.h>
 #include <stdbool.h>
-#define CASE_BUBBLE_SORT 1
-#define CASE_QUICK_SORT 2
-#define CASE_INSERTION_SORT 3
-#define CASE_SELECTION_SORT 4
-#define CASE_MERGE_SORT 5
-#define CASE_HEAP_SORT 6
-#define CASE_SHELL_SORT 7
-#define CASE_COUNT_SORT 8
-#define CASE_RADIX_SORT 9
-#define CASE_BUCKET_SORT 10
+enum SortType {
+    SORT_BUBBLE = 1,
+    SORT_QUICK,
+    SORT_INSERTION,
+    SORT_SELECTION,
+    SORT_MERGE,
+    SORT_HEAP,
+    SORT_SHELL,
+    SORT_COUNT,
+    SORT_RADIX,
+    SORT_BUCKET
+};
 
+enum SearchType {
+    SEARCH_DFS = 1,
+    SEARCH_BFS,
+    SEARCH_DIJKSTRA,
+    SEARCH_ASTAR,
+    SEARCH_JUMP
+};
+
+ 
 void bubbleSort();
 void quickSort();
 void insertionSort();
@@ -296,7 +307,7 @@ int int_input;
         f_time=clock()-f_time;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
-        printf("Execution time - > %.7f seconds \n",exec_time);
+        printf("Timpul de executie - > %.7f secunde \n",exec_time);
         printf("Memory used - > %ld KB\n",exec_memory_used);
         break;
         }
@@ -309,7 +320,7 @@ int int_input;
         f_time=clock()-f_time;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
-        printf("Execution time - > %.7f seconds \n",exec_time);
+        printf("Timpul de executie - > %.7f secunde \n",exec_time);
         printf("Memory used - > %ld KB\n",exec_memory_used);
         break;}
         case 3: {
@@ -321,7 +332,7 @@ int int_input;
         f_time=clock()-f_time;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
-        printf("Execution time - > %.7f seconds \n",exec_time);
+        printf("Timpul de executie - > %.7f secunde \n",exec_time);
         printf("Memory used - > %ld KB\n",exec_memory_used);
         break;
         }
@@ -334,7 +345,7 @@ int int_input;
         f_time=clock()-f_time;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
-        printf("Execution time - > %.7f seconds \n",exec_time);
+        printf("Timpul de executie - > %.7f secunde \n",exec_time);
         printf("Memory used - > %ld KB\n",exec_memory_used);
         break;
         }
@@ -346,7 +357,7 @@ int int_input;
             mergeSort();f_time=clock()-f_time;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
-        printf("Execution time - > %.7f seconds \n",exec_time);
+        printf("Timpul de executie - > %.7f secunde \n",exec_time);
         printf("Memory used - > %ld KB\n",,exec_memory_used);
         break;}
         case 6:{ 
@@ -358,7 +369,7 @@ int int_input;
         f_time=clock()-f_time;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
-        printf("Execution time - > %.7f seconds \n",exec_time);
+        printf("Timpul de executie - > %.7f secunde \n",exec_time);
         printf("Memory used - > %ld KB\n",exec_memory_used);
         break;}
         case 7:{ 
@@ -370,7 +381,7 @@ int int_input;
         f_time=clock()-f_time;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
-        printf("Execution time - > %.7f seconds \n",exec_time);
+        printf("Timpul de executie - > %.7f secunde \n",exec_time);
         printf("Memory used - > %ld KB\n",exec_memory_used);
         break;}
         case 8: {
@@ -382,7 +393,7 @@ int int_input;
         f_time=clock()-f_time;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
-        printf("Execution time - > %.7f seconds \n",exec_time);
+        printf("Timpul de executie - > %.7f secunde \n",exec_time);
         printf("Memory used - > %ld KB\n",exec_memory_used);
         break;
 }
@@ -395,7 +406,7 @@ int int_input;
         f_time=clock()-f_time;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
-        printf("Execution time - > %.7f seconds \n",exec_time);
+        printf("Timpul de executie - > %.7f secunde \n",exec_time);
         printf("Memory used - > %ld KB\n",exec_memory_used);
         break;}
         case 10:{
@@ -407,40 +418,13 @@ int int_input;
         f_time=clock()-f_time;
         double exec_time=((double)f_time)/CLOCKS_PER_SEC;
         long exec_memory_used=usage_after.ru_maxrss-usage_before.ru_maxrss;
-        printf("Execution time - > %.7f seconds \n",exec_time);
+        printf("Timpul de executie - > %.7f secunde \n",exec_time);
         printf("Memory used - > %ld KB\n",exec_memory_used);
         break;}
         default:printf("Optiune invalida\n\n");
     }
 }
 
-int main(){
-char *input=(char*)malloc(3*sizeof(char));
-    do {
-printf("1. Alg Sortari\n");
-printf("2. Alg Cautari\n");
-printf("3. Alg Grafuri\n");
-printf(" Iesire \n");
-printf("\n");
-printf("Alege : \n");
-scanf("%s",input);
-
-int int_input=atoi(input);
-switch (int_input){
-    case 1: sort_algo_menu();break;
-    case 2: search_algo_menu();break;
-    case 3: graph_algo_menu();break;
-    default: printf("Optiune invalida\n");break;
-}
-} while(strcmp(input,"q")!=0 && strcmp(input,"Q")!=0);
-    return 0;
-}
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <stdbool.h>
-#include <ctype.h>
 void info_bubble_sort(){ 
     printf("\n=== BUBBLE SORT ===\n\n");
     printf("Bubble Sort este un algoritm simplu de sortare.\n");
@@ -836,39 +820,39 @@ void to_lowercase_transform(char*string){
         string[i]=tolower(string[i]);
     }
 }
-// Forward declarations for menus
+
 static void sort_algo_menu(void);
 static void search_algo_menu(void);
 
-// Sorting algorithms implemented
+
 static void bubbleSort(void);
 static void quickSort(void);
 static void insertionSort(void);
 static void selectionSort(void);
 static void countingSort(void);
 
-// Stubs for not-yet-implemented sorting algorithms (to avoid linker errors)
+
 static void mergeSort_stub(void);
 static void heapSort_stub(void);
 static void shellSort_stub(void);
 static void radixSort_stub(void);
 static void bucketSort_stub(void);
 
-// Stubs for search algorithms (not implemented yet)
+
 static void dfs_stub(void);
 static void bfs_stub(void);
 static void dijkstra_stub(void);
 static void a_star_stub(void);
 static void jump_search_stub(void);
 
-// Internal helper for quick sort
+
 static void quickSortLogic(int arr[], int l, int r);
 
-// Utilities
+
 static int* generate_random_array(int n, int a, int b);
 static void print_array(const int arr[], int n);
 
-// ======================= Utilities =======================
+
 static int* generate_random_array(int n, int a, int b){
     if (n <= 0) return NULL;
     if (a > b) { int t = a; a = b; b = t; }
@@ -888,7 +872,6 @@ static void print_array(const int arr[], int n){
     printf("\n");
 }
 
-// ======================= Sorting Implementations =======================
 static void bubbleSort(void){
     int nr_elem, a, b;
     printf("Introduceti nr. de elemente: \n\n");
@@ -1426,7 +1409,6 @@ static void jump_search(void){
     printf("Jump Search nu este inca implementat.\n");
 }
 
-// ======================= Menus =======================
 static void sort_algo_menu(void){
     int int_input;
     printf("\n Sortari \n");
@@ -1443,75 +1425,75 @@ static void sort_algo_menu(void){
     printf("Alege :");
     if (scanf("%d", &int_input) ==1 && int_input>=1 && int_input<=10){
     switch(int_input){
-        case CASE_BUBBLE_SORT:{
+        case SORT_BUBBLE:{
             clock_t f_time = clock();
             bubbleSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
-            printf("Execution time - > %.7f seconds \n", exec_time);
+            printf("Timpul de executie - > %.7f secunde \n", exec_time);
             break;}
-        case CASE_QUICK_SORT:{
+        case SORT_QUICK:{
             clock_t f_time = clock();
             quickSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
-            printf("Execution time - > %.7f seconds \n", exec_time);
+            printf("Timpul de executie - > %.7f secunde \n", exec_time);
             break;}
-        case CASE_INSERTION_SORT:{
+        case SORT_INSERTION:{
             clock_t f_time = clock();
             insertionSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
-            printf("Execution time - > %.7f seconds \n", exec_time);
+            printf("Timpul de executie - > %.7f secunde \n", exec_time);
             break;}
-        case CASE_SELECTION_SORT:{
+        case SORT_SELECTION:{
             clock_t f_time = clock();
             selectionSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
-            printf("Execution time - > %.7f seconds \n", exec_time);
+            printf("Timpul de executie - > %.7f secunde \n", exec_time);
             break;}
-        case CASE_MERGE_SORT:{
+        case SORT_MERGE:{
             clock_t f_time = clock();
             mergeSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
-            printf("Execution time - > %.7f seconds \n", exec_time);
+            printf("Timpul de executie - > %.7f secunde \n", exec_time);
             break;}
-        case CASE_HEAP_SORT:{
+        case SORT_HEAP:{
             clock_t f_time = clock();
             heapSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
-            printf("Execution time - > %.7f seconds \n", exec_time);
+            printf("Timpul de executie - > %.7f secunde \n", exec_time);
             break;}
-        case CASE_SHELL_SORT:{
+        case SORT_SHELL:{
             clock_t f_time = clock();
             shellSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
-            printf("Execution time - > %.7f seconds \n", exec_time);
+            printf("Timpul de executie - > %.7f secunde \n", exec_time);
             break;}
-        case CASE_COUNT_SORT:{
+        case SORT_COUNT:{
             clock_t f_time = clock();
             countingSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
-            printf("Execution time - > %.7f seconds \n", exec_time);
+            printf("Timpul de executie - > %.7f secunde \n", exec_time);
             break;}
-        case CASE_RADIX_SORT:{
+        case SORT_RADIX:{
             clock_t f_time = clock();
             radixSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
-            printf("Execution time - > %.7f seconds \n", exec_time);
+            printf("Timpul de executie - > %.7f secunde \n", exec_time);
             break;}
-        case CASE_BUCKET_SORT:{
+        case SORT_BUCKET:{
             clock_t f_time = clock();
             bucketSort();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
-            printf("Execution time - > %.7f seconds \n", exec_time);
+            printf("Timpul de executie - > %.7f secunde \n", exec_time);
             break;}
         default:
             printf("Optiune invalida\n\n");
@@ -1540,40 +1522,40 @@ static void search_algo_menu(void){
     printf("Alege :");
 if (scanf("%d", &int_input) ==1 && int_input>=1 && int_input<=10){
     switch(int_input){
-        case 1:{
+        case SEARCH_DFS:{
             clock_t f_time = clock();
             dfs();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
-            printf("Execution time - > %.7f seconds \n", exec_time);
+            printf("Timpul de executie - > %.7f secunde \n", exec_time);
             break;}
-        case 2:{
+        case SEARCH_BFS:{
             clock_t f_time = clock();
             bfs();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
-            printf("Execution time - > %.7f seconds \n", exec_time);
+            printf("Timpul de executie - > %.7f secunde \n", exec_time);
             break;}
-        case 3:{
+        case SEARCH_DIJKSTRA:{
             clock_t f_time = clock();
             dijkstra();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
-            printf("Execution time - > %.7f seconds \n", exec_time);
+            printf("Timpul de executie - > %.7f secunde \n", exec_time);
             break;}
-        case 4:{
+        case SEARCH_ASTAR:{
             clock_t f_time = clock();
             a_star();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
-            printf("Execution time - > %.7f seconds \n", exec_time);
+            printf("Timpul de executie - > %.7f secunde \n", exec_time);
             break;}
-        case 5:{
+        case SEARCH_JUMP:{
             clock_t f_time = clock();
             jump_search();
             f_time = clock() - f_time;
             double exec_time = ((double)f_time)/CLOCKS_PER_SEC;
-            printf("Execution time - > %.7f seconds \n", exec_time);
+            printf("Timpul de executie - > %.7f secunde \n", exec_time);
             break;}
         default: 
             printf("Optiune invalida\n");
@@ -1590,13 +1572,129 @@ if (scanf("%d", &int_input) ==1 && int_input>=1 && int_input<=10){
     }
 }
 }
+static void more_info_meno(void){
+     char *input=(char*)malloc(15*sizeof(char));
+do {
+    printf("Explicatii mecanisme sortari/cautari :\n1. Algoritmi Sortari\n2. Algoritmi Cautari\nIesire (q/Q)\n\n");
+    if (scanf("%14s", input) != 1) return 0;
 
+    if (strcmp(input, "1") == 0) {
+        more_info_sort_algorithms();
+    } else if (strcmp(input, "2") == 0) {
+        more_info_search_algorithms();
+    }
+    else if (strcmp(input, "q") == 0 || strcmp(input, "Q") == 0) {
+        printf("Ai iesit din program!\n");
+    } else {
+        printf("Optiune invalida\n");
+    }
+} while (strcmp(input, "q") != 0 && strcmp(input, "Q") != 0);
+free(input);
+    return 0;
+}
+static void more_info_sort_algorithms(void){
+ int int_input;
+do{
+ printf("\n Explicatii mecanisme sortare in detaliu\n");
+    printf("1. Bubble Sort\n");
+    printf("2. Quick Sort\n");
+    printf("3. Insertion Sort\n");
+    printf("4. Selection Sort\n");
+    printf("5. Merge Sort\n");
+    printf("6. Heap Sort\n");
+    printf("7. Shell Sort\n");
+    printf("8. Counting Sort\n");
+    printf("9. Radix Sort\n");
+    printf("10. Bucket Sort\n");
+    switch(int_input){
+        case CASE_BUBBLE_SORT:{
+            info_bubble_sort();
+            break;}
+        case CASE_QUICK_SORT:{
+            info_quick_sort();
+            break;}
+        case CASE_INSERTION_SORT:{
+            info_insertion_sort();
+            break;}
+        case CASE_SELECTION_SORT:{
+          info_selection_sort();
+            break;}
+        case CASE_MERGE_SORT:{
+            info_merge_sort();
+            break;}
+        case CASE_HEAP_SORT:{
+            info_heap_sort();
+            break;}
+        case CASE_SHELL_SORT:{
+            info_shell_sort();
+            break;}
+        case CASE_COUNT_SORT:{
+            info_count_sort();
+            break;}
+        case CASE_RADIX_SORT:{
+            info_radix_sort();
+            break;}
+        case CASE_BUCKET_SORT:{
+            info_bucket_sort();
+            break;}
+        default:
+            printf("Optiune invalida\n\n");
+            break;
+}while(scanf("%d", &int_input) ==1 && int_input>=1 && int_input<=10);
+
+}
+
+static void more_info_search_algorithms(void){
+ int int_input;
+do{
+ printf("\n Explicatii mecanisme cautare in detaliu\n");
+    printf("1. DFS\n");
+    printf("2. BFS\n");
+    printf("3. Dijkstra\n");
+    printf("4. A* search\n");
+    printf("5. Jump search\n");
+    switch(int_input){
+        case CASE_BUBBLE_SORT:{
+            info_bubble_sort();
+            break;}
+        case CASE_QUICK_SORT:{
+            info_quick_sort();
+            break;}
+        case CASE_INSERTION_SORT:{
+            info_insertion_sort();
+            break;}
+        case CASE_SELECTION_SORT:{
+          info_selection_sort();
+            break;}
+        case CASE_MERGE_SORT:{
+            info_merge_sort();
+            break;}
+        case CASE_HEAP_SORT:{
+            info_heap_sort();
+            break;}
+        case CASE_SHELL_SORT:{
+            info_shell_sort();
+            break;}
+        case CASE_COUNT_SORT:{
+            info_count_sort();
+            break;}
+        case CASE_RADIX_SORT:{
+            info_radix_sort();
+            break;}
+        case CASE_BUCKET_SORT:{
+            info_bucket_sort();
+            break;}
+        default:
+            printf("Optiune invalida\n\n");
+            break;
+}while(scanf("%d", &int_input) ==1 && int_input>=1 && int_input<=10);
+
+}
 int main(void){
-
     srand((unsigned)time(NULL));
     char *input=(char*)malloc(15*sizeof(char));
 do {
-    printf("Alege :\n1. Alg Sortari\n2. Alg Cautari\nIesire (q/Q)\n\n");
+    printf("Alege :\n1. Algoritmi Sortari\n2. Algoritmi Cautari\nIesire (q/Q)\n\n");
     if (scanf("%14s", input) != 1) return 0;
 
     if (strcmp(input, "1") == 0) {
