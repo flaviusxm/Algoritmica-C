@@ -7,11 +7,11 @@
     #define DLL_EXPORT
 #endif
 
-// Helpers 
+
 DLL_EXPORT int *generate_random_array(int size, int min, int max);
 DLL_EXPORT void print_array(int arr[], int size);
 
-// Sortări
+
 DLL_EXPORT void bubbleSort(void);
 DLL_EXPORT void quickSort(void);
 DLL_EXPORT void insertionSort(void);

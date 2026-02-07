@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
-
+#include <string.h>
 // general helpers
 DLL_EXPORT int *generate_random_array(int size, int min, int max) {
     if (size <= 0) return NULL;

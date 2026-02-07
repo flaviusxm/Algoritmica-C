@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include "info_module.h"
 void info_bubble_sort(){ 
     printf("\n=== BUBBLE SORT ===\n\n");
     printf("Compara elemente adiacente si le interschimba daca sunt in ordinea gresita.\n");
