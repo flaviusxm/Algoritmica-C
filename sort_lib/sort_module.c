@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <string.h>
 // general helpers
-DLL_EXPORT int *generate_random_array(int size, int min, int max) {
+static int *generate_random_array(int size, int min, int max) {
     if (size <= 0) return NULL;
     int *arr = (int*)malloc(size * sizeof(int));
     if (!arr) return NULL;
@@ -16,7 +16,7 @@ DLL_EXPORT int *generate_random_array(int size, int min, int max) {
     return arr;
 }
 
-DLL_EXPORT void print_array(int arr[], int size) {
+static void print_array(int arr[], int size) {
     for (int i = 0; i < size; i++) {
         printf("%d ", arr[i]);
     }
@@ -533,6 +533,34 @@ DLL_EXPORT void shellSort(void) {
         }
     }
 
+    printf("Vector sortat: ");
+    print_array(array, num_elements);
+    free(array);
+}
+DLL_EXPORT void gnomeSort(void) {
+    srand(time(NULL));
+    int num_elements, min_val, max_val;
+    printf("=== GNOME SORT ===\n");
+    printf("Introduceti nr. de elemente: ");
+    if (scanf("%d", &num_elements) != 1) return;
+    printf("Introduceti valoarea minima si maxima: ");
+    if (scanf("%d %d", &min_val, &max_val) != 2) return;
+    int *array = generate_random_array(num_elements, min_val, max_val);
+    if (!array) {printf("Eroare!\n");free(array);return;}
+    printf("Vector initial: ");
+    print_array(array, num_elements);
+
+    int index=0;
+    while (index < num_elements) {
+        if ( index==0 || array[index] >= array[index-1]) {
+            index++;
+        }else {
+            int temp=array[index];
+            array[index] = array[index-1];
+            array[index-1] = temp;
+            index--;
+        }
+    }
     printf("Vector sortat: ");
     print_array(array, num_elements);
     free(array);

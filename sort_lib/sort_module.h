@@ -8,8 +8,6 @@
 #endif
 
 
-DLL_EXPORT int *generate_random_array(int size, int min, int max);
-DLL_EXPORT void print_array(int arr[], int size);
 
 
 DLL_EXPORT void bubbleSort(void);

@@ -105,12 +105,14 @@ if !errorlevel! == 0 (
     echo ! Make nu este instalat - folosesc compilare directă
     echo.
     
-    if "!COMPILER!"=="cl" (
         echo Compiling info_module.dll...
         !COMPILER! !CFLAGS! !SHARED_FLAGS! info_lib\info_module.c !OUTPUT_FLAG!info_module.dll
         
         echo Compiling sort_module.dll...
         !COMPILER! !CFLAGS! !SHARED_FLAGS! sort_lib\sort_module.c !OUTPUT_FLAG!sort_module.dll
+
+        echo Compiling search_module.dll...
+        !COMPILER! !CFLAGS! !SHARED_FLAGS! search_lib\search_module.c !OUTPUT_FLAG!search_module.dll
         
         echo Compiling main executable...
         !COMPILER! !CFLAGS! main_exec.c !OUTPUT_FLAG!main_exec.exe info_module.lib sort_module.lib psapi.lib
@@ -120,6 +122,9 @@ if !errorlevel! == 0 (
         
         echo Compiling sort_module.dll...
         !COMPILER! !CFLAGS! !SHARED_FLAGS! !OUTPUT_FLAG!sort_module.dll sort_lib\sort_module.c
+
+        echo Compiling search_module.dll...
+        !COMPILER! !CFLAGS! !SHARED_FLAGS! !OUTPUT_FLAG!search_module.dll search_lib\search_module.c
         
         echo Compiling main executable...
         if "!COMPILER!"=="tcc" (

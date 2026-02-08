@@ -10,6 +10,7 @@
 //dynamic libs
 static HMODULE hSortDLL;
 static HMODULE hInfoDLL;
+static HMODULE hSearchDLL;
 
 typedef void (*proc_void)(void);
 
@@ -24,10 +25,16 @@ static proc_void shellSort_ptr = NULL;
 static proc_void countSort_ptr = NULL;
 static proc_void radixSort_ptr = NULL;
 static proc_void bucketSort_ptr = NULL;
+static proc_void gnomeSort_ptr = NULL;
 
 // search function pointers (from search_module.dll)
 static proc_void dfs_ptr = NULL;
 static proc_void bfs_ptr = NULL;
+static proc_void binary_ptr = NULL;
+static proc_void jump_ptr = NULL;
+static proc_void interpolation_ptr = NULL;
+static proc_void exponential_ptr = NULL;
+static proc_void linear_ptr = NULL;
 
 // info function pointers (from info_module.dll)
 static proc_void info_bubble_sort_ptr = NULL;
@@ -40,15 +47,16 @@ static proc_void info_heap_sort_ptr = NULL;
 static proc_void info_radix_sort_ptr = NULL;
 static proc_void info_shell_sort_ptr = NULL;
 static proc_void info_count_sort_ptr = NULL;
+static proc_void info_gnome_sort_ptr = NULL;
 
-// Forward declarations for menus
+
 static void sort_algo_menu(void);
 static void search_algo_menu(void);
 static void more_info_menu(void);
 static void more_info_sort_algorithms(void);
 static void more_info_search_algorithms(void);
 
-// Benchmark result
+
 typedef struct {
     double execution_time;  // seconds
     size_t memory_used;     // KB
@@ -74,7 +82,7 @@ static BenchmarkResult run_benchmarks(void (*f)(void)){
     return result;
 }
 
-// Menus and helpers
+
 enum SortType {
     SORT_BUBBLE = 1,
     SORT_QUICK,
@@ -85,7 +93,8 @@ enum SortType {
     SORT_SHELL,
     SORT_COUNT,
     SORT_RADIX,
-    SORT_BUCKET
+    SORT_BUCKET,
+    SORT_GNOME
 };
 
 enum SearchType {
@@ -93,22 +102,27 @@ enum SearchType {
     SEARCH_BFS,
     SEARCH_DIJKSTRA,
     SEARCH_ASTAR,
-    SEARCH_JUMP
+    SEARCH_JUMP,
+    SEARCH_BINARY,
+    SEARCH_INTERPOLATION,
+    SEARCH_LINEAR,
+    SEARCH_EXPONENTIAL
 };
 
 static void sort_algo_menu(void){
     int int_input;
     printf("\n Sortari \n");
-    printf("1. Bubble Sort\n");
-    printf("2. Quick Sort\n");
-    printf("3. Insertion Sort\n");
-    printf("4. Selection Sort\n");
-    printf("5. Merge Sort\n");
-    printf("6. Heap Sort\n");
-    printf("7. Shell Sort\n");
-    printf("8. Counting Sort\n");
-    printf("9. Radix Sort\n");
-    printf("10. Bucket Sort\n");
+    printf("1. Bubble \n");
+    printf("2. Quick \n");
+    printf("3. Insertion \n");
+    printf("4. Selection \n");
+    printf("5. Merge \n");
+    printf("6. Heap \n");
+    printf("7. Shell \n");
+    printf("8. Counting \n");
+    printf("9. Radix \n");
+    printf("10. Bucket \n");
+    printf("11. Gnome \n");
     printf("Alege :");
 
     if (scanf("%d", &int_input) != 1) {
@@ -179,6 +193,11 @@ static void sort_algo_menu(void){
             results = run_benchmarks(bucketSort_ptr);
             executed = true;
             break;
+        } case SORT_GNOME:{
+            if (!bucketSort_ptr) { printf("Functia gnomeSort indisponibila.\n"); return; }
+            results = run_benchmarks(gnomeSort_ptr);
+            executed = true;
+            break;
         }
         default:
             printf("Optiune invalida\n\n");
@@ -191,20 +210,18 @@ static void sort_algo_menu(void){
     }
 }
 
-static void to_lowercase_transform(char* string){
-    for (int i = 0; string[i]; i++){
-        string[i] = (char)tolower((unsigned char)string[i]);
-    }
-}
-
 static void search_algo_menu(void){
     int int_input;
     printf("\n Cautari \n");
     printf("1. DFS\n");
     printf("2. BFS\n");
     printf("3. Dijkstra\n");
-    printf("4. A* search\n");
-    printf("5. Jump search\n");
+    printf("4. A* \n");
+    printf("5. Jump \n");
+    printf("6. Binary\n");
+    printf("7. Interpolation\n");
+    printf("8. Linear \n");
+    printf("9. Exponential \n");
     printf("Alege :");
 
     if (scanf("%d", &int_input) != 1) {
@@ -237,9 +254,36 @@ static void search_algo_menu(void){
             break;
         }
         case SEARCH_JUMP:{  
-            printf("Jump search nu este implementat.\n");
+            if (!jump_ptr) { printf("Functia jump indisponibila.\n"); return; }
+            results = run_benchmarks(jump_ptr);
+            executed = true;
             break;
         }
+        case SEARCH_BINARY: {
+            if (!binary_ptr) { printf("Functia binary indisponibila.\n"); return; }
+            results = run_benchmarks(binary_ptr);
+            executed = true;
+            break;
+        }
+        case SEARCH_INTERPOLATION: {
+            if (!interpolation_ptr) { printf("Functia interpolation indisponibila.\n"); return; }
+            results = run_benchmarks(interpolation_ptr);
+            executed = true;
+            break;
+        }
+        case SEARCH_LINEAR: {
+             if (!linear_ptr) { printf("Functia linear indisponibila.\n"); return; }
+            results = run_benchmarks(linear_ptr);
+            executed = true;
+            break;
+        }
+        case SEARCH_EXPONENTIAL: {
+             if (!exponential_ptr) { printf("Functia exponential indisponibila.\n"); return; }
+            results = run_benchmarks(exponential_ptr);
+            executed = true;
+            break;
+        }
+
         default: 
             printf("Optiune invalida\n");
             break;
@@ -312,16 +356,20 @@ static void more_info_search_algorithms(void){
 }
 
 int main(void){
-    // Load DLLs available in current directory
     hSortDLL = LoadLibrary("sort_module.dll");
     if (!hSortDLL) {
         printf("Eroare la incarcare sort_module.dll\n");
-        // We can still run other parts if needed
+
     }
    
     hInfoDLL = LoadLibrary("info_module.dll");
     if (!hInfoDLL) {
         printf("Eroare la incarcare info_module.dll (optional)\n");
+    }
+
+    hSearchDLL = LoadLibrary("search_module.dll");
+    if (!hSearchDLL) {
+        printf("Eroare la incarcare search_module.dll\n");
     }
 
     // Resolve sort functions
@@ -336,11 +384,21 @@ int main(void){
         countSort_ptr      = (proc_void)GetProcAddress(hSortDLL, "countSort");
         radixSort_ptr      = (proc_void)GetProcAddress(hSortDLL, "radixSort");
         bucketSort_ptr     = (proc_void)GetProcAddress(hSortDLL, "bucketSort");
+        gnomeSort_ptr=(proc_void)GetProcAddress(hSortDLL, "gnomeSort");
     }
 
+
+    if (hSearchDLL) {
+        dfs_ptr = (proc_void)GetProcAddress(hSearchDLL, "dfs_search");
+        bfs_ptr = (proc_void)GetProcAddress(hSearchDLL, "bfs_search");
+        binary_ptr = (proc_void)GetProcAddress(hSearchDLL, "binary_search");
+        jump_ptr = (proc_void)GetProcAddress(hSearchDLL, "jump_search");
+        interpolation_ptr = (proc_void)GetProcAddress(hSearchDLL, "interpolation_search");
+        linear_ptr = (proc_void)GetProcAddress(hSearchDLL, "linear_search");
+        exponential_ptr = (proc_void)GetProcAddress(hSearchDLL, "exponential_search");
+    }
     
 
-    // Resolve info functions (optional)
     if (hInfoDLL) {
         info_bubble_sort_ptr    = (proc_void)GetProcAddress(hInfoDLL, "info_bubble_sort");
         info_insertion_sort_ptr = (proc_void)GetProcAddress(hInfoDLL, "info_insertion_sort");
@@ -377,7 +435,7 @@ int main(void){
     free(input);
 
     if (hSortDLL) FreeLibrary(hSortDLL);
-   
+    if (hSearchDLL) FreeLibrary(hSearchDLL);
     if (hInfoDLL) FreeLibrary(hInfoDLL);
 
     return 0;
